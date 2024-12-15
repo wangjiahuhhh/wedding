@@ -106,12 +106,12 @@
         <div class="content" id="content">
             <h3>我们结婚啦！</h3>
             <p style="font-size: 12px;">诚邀您参加我们的婚礼，共度美好时光。</p>
-            <button id="playAudio" @click="hiddenContent()">确认参加</button>
+            <button id="playAudio" onclick="hiddenContent()">欢迎光临</button>
         </div>
         <canvas class="fireworks"></canvas>
     </div>
-    <audio id="backgroundAudio" loop>
-        <source src="https://files.catbox.moe/w34chf.mp3" type="audio/mpeg"> <!-- Replace with your audio file URL -->
+<audio id="backgroundAudio" loop muted autoplay>
+        <source src="https://files.catbox.moe/9q0ayy.mp3" type="audio/mpeg"> <!-- Replace with your audio file URL -->
     </audio>
     <script>
         const canvas = document.querySelector('.fireworks');
@@ -139,7 +139,7 @@
             }
 
             update() {
-                this.radius += 2;
+                this.radius += 1;
                 this.alpha -= 0.03;
             }
         }
@@ -150,7 +150,7 @@
             const x = Math.random() * canvas.width;
             const y = Math.random() * canvas.height;
             const color = `hsl(${Math.random() * 360}, 100%, 70%)`;
-            fireworks.push(new Firework(x, y, 5, color));
+            fireworks.push(new Firework(x, y, 2, color));
         }
 
         function animate() {
@@ -175,6 +175,22 @@
             hiddenContent.style.display='none';
             audio.play();
         }
+        window.onload = function() {
+        const audio = document.getElementById('backgroundAudio');
+
+        // 模拟一个点击事件来触发音频播放
+        document.body.addEventListener('click', function() {
+            audio.muted = false;  // 取消静音
+            audio.play()          // 播放音频
+                .then(() => {
+                    console.log('音频播放成功');
+                })
+                .catch(error => {
+                    console.error('播放失败：', error);
+                });
+        });
+    };
+
         // function enableAudioPlayback() {
         //     const audio = document.getElementById('backgroundAudio');
         //     const playButton = document.getElementById('playAudio');
