@@ -20,7 +20,7 @@
             position: relative;
             width: 100vw;
             height: 100vh;
-            background-image: url('./371734237894_.png'); /* Replace with your image URL */
+            background-image: url('./371734237894_pic.png'); /* Replace with your image URL */
             background-size:100% 100%;
             background-repeat: no-repeat;
             background-position: center;
@@ -106,11 +106,11 @@
         <div class="content" id="content">
             <h3>我们结婚啦！</h3>
             <p style="font-size: 12px;">诚邀您参加我们的婚礼，共度美好时光。</p>
-            <button onclick="hideContent()" id="playAudio">确认参加</button>
+            <button id="playAudio">确认参加</button>
         </div>
         <canvas class="fireworks"></canvas>
     </div>
-    <audio id="background-audio" loop>
+    <audio id="backgroundAudio" loop>
         <source src="https://files.catbox.moe/w34chf.mp3" type="audio/mpeg"> <!-- Replace with your audio file URL -->
     </audio>
     <script>
@@ -172,18 +172,28 @@
 
         setInterval(spawnFirework, 300);
         animate();
-        function startAudio() {
-            const audio = document.getElementById('background-audio');
-            audio.play().then(() => {
-                console.log("Background music is playing.");
-            }).catch(error => {
-                console.error("Background music failed to play:", error);
+        function enableAudioPlayback() {
+            const audio = document.getElementById('backgroundAudio');
+            const playButton = document.getElementById('playAudio');
+            
+            // Bind click event to trigger playback
+            playButton.addEventListener('click', () => {
+                audio.play()
+                    .then(() => {
+                        console.log("Audio is playing");
+                        playButton.style.display = 'none'; // Hide button after playback starts
+                    })
+                    .catch(error => {
+                        console.error("Failed to play audio:", error);
+                    });
             });
-            document.querySelector('button').style.display = 'none'; // 隐藏按钮
+
+            // Handle WeChat-specific restrictions by ensuring user interaction triggers playback
             document.addEventListener('WeixinJSBridgeReady', () => {
                 audio.play();
             });
         }
+        enableAudioPlayback();
     </script>
 </body>
 </html>
