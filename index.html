@@ -175,21 +175,31 @@
             hiddenContent.style.display='none';
             audio.play();
         }
-        window.onload = function() {
+    // 在微信环境中，等待 WeixinJSBridgeReady 事件
+    document.addEventListener('WeixinJSBridgeReady', function() {
         const audio = document.getElementById('backgroundAudio');
+        audio.muted = false;  // 取消静音
+        audio.play()          // 播放音频
+            .then(() => {
+                console.log('音频播放成功');
+            })
+            .catch(error => {
+                console.error('播放失败：', error);
+            });
+    });
 
-        // 模拟一个点击事件来触发音频播放
-        document.body.addEventListener('click', function() {
-            audio.muted = false;  // 取消静音
-            audio.play()          // 播放音频
-                .then(() => {
-                    console.log('音频播放成功');
-                })
-                .catch(error => {
-                    console.error('播放失败：', error);
-                });
-        });
-    };
+    // 在非微信环境中，等到用户点击时播放
+    document.body.addEventListener('click', function() {
+        const audio = document.getElementById('backgroundAudio');
+        audio.muted = false;  // 取消静音
+        audio.play()          // 播放音频
+            .then(() => {
+                console.log('音频播放成功');
+            })
+            .catch(error => {
+                console.error('播放失败：', error);
+            });
+    });
 
         // function enableAudioPlayback() {
         //     const audio = document.getElementById('backgroundAudio');
