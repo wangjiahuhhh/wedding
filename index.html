@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electronic Invitation Card</title>
+    <title>王源 & 刘峰 婚礼邀请</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,21 +23,21 @@
             height: 80%;
             max-height: 600px;
             background-image: url('https://s2.loli.net/2024/12/15/RYlCvPI72Bt9dXG.jpg'); /* Replace with your image URL */
-            background-size: cover;
+            background-size:100% 100%;
             background-position: center;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(255, 0, 0, 0.6);
             overflow: hidden;
-            animation: fadeIn 3s ease-in-out;
+            animation: pulse 4s infinite;
         }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
+        @keyframes pulse {
+            0%, 100% {
                 transform: scale(1);
+                box-shadow: 0 8px 15px rgba(255, 0, 0, 0.6);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 12px 20px rgba(255, 0, 0, 0.8);
             }
         }
         .overlay {
@@ -46,7 +46,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, rgba(255, 0, 0, 0.6), rgba(255, 255, 0, 0.6));
+            mix-blend-mode: multiply;
         }
         .content {
             position: absolute;
@@ -55,62 +56,135 @@
             transform: translate(-50%, -50%);
             color: #fff;
             text-align: center;
-            animation: slideUp 2s ease-in-out;
+            font-size: 20px;
+            animation: fadeInUp 2s ease-in-out;
         }
-        @keyframes slideUp {
+        @keyframes fadeInUp {
             from {
-                transform: translate(-50%, 100%);
+                opacity: 0;
+                transform: translate(-50%, 20%);
             }
             to {
+                opacity: 1;
                 transform: translate(-50%, -50%);
             }
         }
         .content h1 {
             margin: 0;
-            font-size: 6vw;
+            font-size: 7vw;
             font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(255, 0, 0, 0.9);
         }
         .content p {
-            margin: 10px 0 20px;
-            font-size: 4vw;
+            margin: 15px 0 20px;
+            font-size: 5vw;
+            font-weight: lighter;
+            color: #ffe5b4;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
         }
         .content button {
-            padding: 10px 20px;
+            padding: 12px 30px;
             border: none;
-            background-color: #ff7b54;
+            background: linear-gradient(90deg, #ff4b1f, #ff9068);
             color: #fff;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 4vw;
-            transition: background-color 0.3s;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         .content button:hover {
-            background-color: #e66b47;
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.8);
+        }
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
         audio {
             position: absolute;
-            top: 10px;
-            left: 10px;
-        }
-        @media screen and (max-height: 600px) {
-            .invitation-card {
-                height: 90%;
-            }
+            bottom: 20px;
+            right: 20px;
         }
     </style>
 </head>
 <body>
     <div class="invitation-card">
         <div class="overlay"></div>
-        <div class="content">
-            <h1>You're Invited!</h1>
-            <p>Join us for a special event.</p>
-            <button onclick="alert('RSVP received!')">RSVP Now</button>
+        <div class="content" id="content">
+            <h3>我们结婚啦！</h3>
+            <p style="font-size: 12px;">诚邀您参加我们的婚礼，共度美好时光。</p>
+            <button onclick="hideContent()">确认参加</button>
         </div>
+        <canvas class="fireworks"></canvas>
     </div>
-    <audio controls preload="none">
+    <audio controls autoplay loop>
         <source src="https://files.catbox.moe/w34chf.mp3" type="audio/mpeg"> <!-- Replace with your audio file URL -->
         Your browser does not support the audio element.
     </audio>
+    <script>
+        function hideContent() {
+            document.getElementById('content').style.display = 'none';
+        }
+        const canvas = document.querySelector('.fireworks');
+        const invitationCard = document.querySelector('.invitation-card');
+canvas.width = invitationCard.clientWidth;
+canvas.height = invitationCard.clientHeight;
+        const ctx = canvas.getContext('2d');
+
+        class Firework {
+            constructor(x, y, radius, color) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.color = color;
+                this.alpha = 1;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+
+            update() {
+                this.radius += 2;
+                this.alpha -= 0.03;
+            }
+        }
+
+        const fireworks = [];
+
+        function spawnFirework() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+            fireworks.push(new Firework(x, y, 5, color));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            fireworks.forEach((firework, index) => {
+                if (firework.alpha <= 0) {
+                    fireworks.splice(index, 1);
+                } else {
+                    firework.update();
+                    firework.draw();
+                }
+            });
+            requestAnimationFrame(animate);
+        }
+
+        setInterval(spawnFirework, 300);
+        animate();
+    </script>
 </body>
 </html>
