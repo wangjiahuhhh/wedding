@@ -173,8 +173,9 @@
             const playButton = document.getElementById('playAudio');
             const hiddenContent = document.getElementById('content');    
             hiddenContent.style.display='none';
-            audio.play();
+            // audio.play();
         }
+        const audio = document.getElementById('backgroundAudio');
     // 在微信环境中，等待 WeixinJSBridgeReady 事件
     if (typeof WeixinJSBridge !== 'undefined') {
         WeixinJSBridge.invoke('enableAudioPlayback', {}, function() {
@@ -183,10 +184,12 @@
             audio.play();         // 播放音频
         });
     }
+    if (typeof wx !== "undefined") {
+        wx.enableAudioPlayback();
+    }
 
     // 在非微信环境中，等到用户点击时播放
     document.body.addEventListener('click', function() {
-        const audio = document.getElementById('backgroundAudio');
         audio.muted = false;  // 取消静音
         audio.play()          // 播放音频
             .then(() => {
