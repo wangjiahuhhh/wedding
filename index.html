@@ -18,9 +18,9 @@
         }
         .invitation-card {
             position: relative;
-            width: 100%;
-            height: 100%;
-            background-image: url('./371734237894_.pic.jpg'); /* Replace with your image URL */
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./371734237894_.png'); /* Replace with your image URL */
             background-size:100% 100%;
             background-repeat: no-repeat;
             background-position: center;
@@ -106,7 +106,7 @@
         <div class="content" id="content">
             <h3>我们结婚啦！</h3>
             <p style="font-size: 12px;">诚邀您参加我们的婚礼，共度美好时光。</p>
-            <button onclick="hideContent()">确认参加</button>
+            <button onclick="hideContent()" id="playAudio">确认参加</button>
         </div>
         <canvas class="fireworks"></canvas>
     </div>
@@ -120,8 +120,8 @@
         }
         const canvas = document.querySelector('.fireworks');
         const invitationCard = document.querySelector('.invitation-card');
-canvas.width = invitationCard.clientWidth;
-canvas.height = invitationCard.clientHeight;
+        canvas.width = invitationCard.clientWidth;
+        canvas.height = invitationCard.clientHeight;
         const ctx = canvas.getContext('2d');
 
         class Firework {
@@ -181,6 +181,10 @@ canvas.height = invitationCard.clientHeight;
             });
             document.querySelector('button').style.display = 'none'; // 隐藏按钮
         }
+
+        document.addEventListener('WeixinJSBridgeReady', () => {
+                audio.play();
+            });
     </script>
 </body>
 </html>
