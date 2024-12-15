@@ -114,10 +114,6 @@
         <source src="https://files.catbox.moe/w34chf.mp3" type="audio/mpeg"> <!-- Replace with your audio file URL -->
     </audio>
     <script>
-        function hideContent() {
-            document.getElementById('content').style.display = 'none';
-            startAudio();
-        }
         const canvas = document.querySelector('.fireworks');
         const invitationCard = document.querySelector('.invitation-card');
         canvas.width = invitationCard.clientWidth;
@@ -191,15 +187,10 @@
         }
 
         // Bind click event to trigger playback
-        playButton.addEventListener('click', playAudio);
-            //hiddenContent.style.display = 'none';
-            // Handle WeChat-specific restrictions by ensuring user interaction triggers playback
+        playButton.addEventListener('click', playAudio,false);
             document.addEventListener('WeixinJSBridgeReady', () => {
-                audio.play()
-                .then(() => {
-                    console.log("Audio is playing in WeixinJSBridgeReady");
-                    hiddenContent.style.display = 'none';
-                    playButton.style.display = 'none'; // Hide button when playback starts
+                audio.play().then(res => {
+                    console.log('res');
                 })
                 .catch(error => {
                     console.error("Failed to play audio in WeixinJSBridgeReady:", error);
