@@ -175,19 +175,21 @@
         function enableAudioPlayback() {
             const audio = document.getElementById('backgroundAudio');
             const playButton = document.getElementById('playAudio');
+            const hiddenContent = document.getElementById('content');
             
             // Bind click event to trigger playback
             playButton.addEventListener('click', () => {
                 audio.play()
                     .then(() => {
                         console.log("Audio is playing");
+                        hiddenContent.style.display = 'none';
                         playButton.style.display = 'none'; // Hide button after playback starts
                     })
                     .catch(error => {
                         console.error("Failed to play audio:", error);
                     });
             });
-
+            //hiddenContent.style.display = 'none';
             // Handle WeChat-specific restrictions by ensuring user interaction triggers playback
             document.addEventListener('WeixinJSBridgeReady', () => {
                 audio.play();
