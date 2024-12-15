@@ -195,9 +195,15 @@
             //hiddenContent.style.display = 'none';
             // Handle WeChat-specific restrictions by ensuring user interaction triggers playback
             document.addEventListener('WeixinJSBridgeReady', () => {
-            audio.play().catch(error => {
-                console.error("Failed to play audio on WeixinJSBridgeReady:", error);
-            });
+                audio.play()
+                .then(() => {
+                    console.log("Audio is playing in WeixinJSBridgeReady");
+                    hiddenContent.style.display = 'none';
+                    playButton.style.display = 'none'; // Hide button when playback starts
+                })
+                .catch(error => {
+                    console.error("Failed to play audio in WeixinJSBridgeReady:", error);
+                });
         });
         }
         document.addEventListener('DOMContentLoaded', enableAudioPlayback);
