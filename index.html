@@ -106,7 +106,7 @@
         <div class="content" id="content">
             <h3>我们结婚啦！</h3>
             <p style="font-size: 12px;">诚邀您参加我们的婚礼，共度美好时光。</p>
-            <button id="playAudio">确认参加</button>
+            <button id="playAudio" @click="hiddenContent()">确认参加</button>
         </div>
         <canvas class="fireworks"></canvas>
     </div>
@@ -168,36 +168,43 @@
 
         setInterval(spawnFirework, 300);
         animate();
-        function enableAudioPlayback() {
+        function hiddenContent() {
             const audio = document.getElementById('backgroundAudio');
             const playButton = document.getElementById('playAudio');
-            const hiddenContent = document.getElementById('content');
+            const hiddenContent = document.getElementById('content');    
+            hiddenContent.style.display='none';
+            audio.play();
+        }
+        // function enableAudioPlayback() {
+        //     const audio = document.getElementById('backgroundAudio');
+        //     const playButton = document.getElementById('playAudio');
+        //     const hiddenContent = document.getElementById('content');
         
-            function playAudio() {
-            audio.play()
-                .then(() => {
-                    console.log("Audio is playing");
-                    hiddenContent.style.display = 'none';
-                    playButton.style.display = 'none'; // Hide button after playback starts
-                })
-                .catch(error => {
-                    console.error("Failed to play audio:", error);
-                    alert("无法播放音频，请重试！");
-                });
-        }
+        //     function playAudio() {
+        //     audio.play()
+        //         .then(() => {
+        //             console.log("Audio is playing");
+        //             hiddenContent.style.display = 'none';
+        //             playButton.style.display = 'none'; // Hide button after playback starts
+        //         })
+        //         .catch(error => {
+        //             console.error("Failed to play audio:", error);
+        //             alert("无法播放音频，请重试！");
+        //         });
+        // }
 
-        // Bind click event to trigger playback
-        playButton.addEventListener('click', playAudio,false);
-            document.addEventListener('WeixinJSBridgeReady', () => {
-                audio.play().then(res => {
-                    console.log('res');
-                })
-                .catch(error => {
-                    console.error("Failed to play audio in WeixinJSBridgeReady:", error);
-                });
-        });
-        }
-        document.addEventListener('DOMContentLoaded', enableAudioPlayback);
+        // // Bind click event to trigger playback
+        // playButton.addEventListener('click', playAudio,false);
+        //     document.addEventListener('WeixinJSBridgeReady', () => {
+        //         audio.play().then(res => {
+        //             console.log('res');
+        //         })
+        //         .catch(error => {
+        //             console.error("Failed to play audio in WeixinJSBridgeReady:", error);
+        //         });
+        // });
+        // }
+        // document.addEventListener('DOMContentLoaded', enableAudioPlayback);
     </script>
 </body>
 </html>
