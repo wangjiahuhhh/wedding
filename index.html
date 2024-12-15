@@ -179,7 +179,7 @@
     // 在微信环境中，等待 WeixinJSBridgeReady 事件
 
 
-    document.addEventListener('WeixinJSBridgeReady', () => {
+    document.body.addEventListener('WeixinJSBridgeReady', () => {
         audio.muted = false; 
         audio.play()
                 .then(() => {
