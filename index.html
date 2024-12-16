@@ -177,10 +177,6 @@
         }
         const audio = document.getElementById('backgroundAudio');
     // 在微信环境中，等待 WeixinJSBridgeReady 事件
-
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const track = audioContext.createMediaElementSource(audio);
-    track.connect(audioContext.destination);
     
     document.body.addEventListener('WeixinJSBridgeReady', () => {
         audio.muted = false; 
