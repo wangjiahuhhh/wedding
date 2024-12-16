@@ -111,7 +111,7 @@
         <canvas class="fireworks"></canvas>
     </div>
 <audio id="backgroundAudio" loop muted autoplay>
-        <source src="haoyunlai.mp3" type="audio/mpeg"> <!-- Replace with your audio file URL -->
+        <source src="haoyun.mp3" type="audio/mpeg"> <!-- Replace with your audio file URL -->
     </audio>
     <script>
         const canvas = document.querySelector('.fireworks');
@@ -176,7 +176,6 @@
             // audio.play();
         }
         const audio = document.getElementById('backgroundAudio');
-    // 在微信环境中，等待 WeixinJSBridgeReady 事件
     
     document.body.addEventListener('WeixinJSBridgeReady', () => {
         audio.muted = false; 
@@ -200,16 +199,6 @@
                 console.error('播放失败：', error);
             });
     });
-    // 页面可见性变化时停止音频播放
-    // document.addEventListener('visibilitychange', function() {
-    //     if (document.hidden) {
-    //         // 页面不再可见时暂停音频播放
-    //         audio.pause();
-    //     } else {
-    //         // 页面重新可见时播放音频
-    //         audio.play();
-    //     }
-    // });
     window.onbeforeunload = function () {
         audio.pause();
     }
