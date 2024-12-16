@@ -176,6 +176,7 @@
             // audio.play();
         }
         const audio = document.getElementById('backgroundAudio');
+    // 在微信环境中，等待 WeixinJSBridgeReady 事件
     
     document.body.addEventListener('WeixinJSBridgeReady', () => {
         audio.muted = false; 
@@ -199,9 +200,7 @@
                 console.error('播放失败：', error);
             });
     });
-    window.onbeforeunload = function () {
-        audio.pause();
-    }
+
     </script>
 </body>
 </html>
