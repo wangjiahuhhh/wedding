@@ -200,6 +200,13 @@
                 console.error('播放失败：', error);
             });
     });
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            // 当页面不可见时，停止音频播放
+            audio.pause();
+            console.log('页面不可见，音频已暂停');
+        }
+    });
 
     </script>
 </body>
